@@ -1,0 +1,201 @@
+/* สไตล์กลาง — neobrutalism: ขอบหนาเข้ม เงาแข็งไม่เบลอ สีสด บนพื้นสว่าง
+   ตัวเลข/สัญลักษณ์อังกฤษใช้ monospace ส่วนข้อความไทยใช้ Sarabun ตัวหนา
+   (monospace ในเครื่องไม่มีสระ-วรรณยุกต์ไทย จึงห้ามใช้กับข้อความไทย)
+
+   ฟอนต์ฝังในโปรเจกต์ (engine/fonts/) เพื่อให้ทุกเครื่องเห็นเหมือนกันโดยไม่ต้องต่อเน็ต
+   Sarabun = เนื้อความ (มีหัว อ่านยาวสบาย) · Kanit = หัวข้อ (display อารมณ์เกม)
+   ทั้งคู่สัญญาอนุญาต SIL OFL — ฝังแจกจ่ายได้ */
+
+@font-face {
+  font-family: "Sarabun"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/sarabun-400-thai.woff2") format("woff2");
+  unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+@font-face {
+  font-family: "Sarabun"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/sarabun-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F, U+2191, U+2193, U+2212, U+2215;
+}
+@font-face {
+  font-family: "Sarabun"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("fonts/sarabun-700-thai.woff2") format("woff2");
+  unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+@font-face {
+  font-family: "Sarabun"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("fonts/sarabun-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F, U+2191, U+2193, U+2212, U+2215;
+}
+@font-face {
+  font-family: "Kanit"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("fonts/kanit-700-thai.woff2") format("woff2");
+  unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC;
+}
+@font-face {
+  font-family: "Kanit"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("fonts/kanit-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F, U+2191, U+2193, U+2212, U+2215;
+}
+
+:root {
+  --bg: #edf1f7;
+  --panel: #ffffff;
+  --ink: #101828;
+  --muted: #55607a;
+  --line: #101828;          /* เส้นขอบหลัก — หนา เข้ม */
+  --line-soft: #d4dae6;     /* เส้นแบ่งรองในตาราง */
+  --accent: #10b981;
+  --accent-soft: #d7f5e9;
+  --warn-soft: #fff1c9;
+  --bad: #d92d20;
+  --bad-soft: #fde5e2;
+  --good: #0b815c;
+  --thai: "Sarabun", "Leelawadee UI", "Segoe UI", system-ui, sans-serif;
+  --display: "Kanit", "Sarabun", "Leelawadee UI", sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  --shadow-sm: 2px 2px 0 0 var(--ink);
+  --shadow: 4px 4px 0 0 var(--ink);
+  --shadow-lg: 8px 8px 0 0 var(--ink);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 2rem 1.25rem 4rem;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--thai);
+  font-size: 18px;
+  line-height: 1.85;
+}
+
+.wrap { max-width: 820px; margin: 0 auto; }
+
+h1 { font-family: var(--display); font-size: 1.9rem; line-height: 1.4; margin: 0 0 .35rem; font-weight: 700; }
+h2 { font-family: var(--display); font-size: 1.28rem; margin: 2.5rem 0 .75rem; font-weight: 700; }
+h3 { font-family: var(--display); font-size: 1.05rem; margin: 1.75rem 0 .5rem; font-weight: 700; }
+p  { margin: 0 0 1rem; }
+
+.lede { color: var(--muted); margin: 0 0 2rem; }
+
+a { color: var(--good); font-weight: 600; }
+
+/* ตัวเลขทุกตัวเป็น monospace — กลิ่น terminal ตามเว็บอ้างอิง */
+.stat { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 700; }
+.big  { font-size: 2.4rem; line-height: 1.1; letter-spacing: -0.03em; }
+code  { font-family: var(--mono); background: #e8edf5; padding: .1rem .4rem; border-radius: 5px; font-size: .88em; }
+
+.card {
+  background: var(--panel);
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 1.1rem 1.25rem;
+  margin: 0 0 1.1rem;
+}
+
+.card.done   { background: var(--accent-soft); }
+.card.locked { opacity: .55; box-shadow: none; border-style: dashed; }
+
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+
+.tag {
+  font-family: var(--display);
+  font-size: .74rem;
+  font-weight: 700;
+  padding: .12rem .6rem;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.tag.plain { background: #e5eaf2; }
+
+button {
+  font: inherit;
+  font-size: .95rem;
+  font-weight: 700;
+  padding: .5rem 1.1rem;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform .08s ease, box-shadow .08s ease;
+  margin: 0 .35rem .35rem 0;
+}
+button:hover  { transform: translate(-1px, -1px); box-shadow: var(--shadow); }
+button:active { transform: translate(2px, 2px); box-shadow: none; }
+button.primary { background: var(--accent); color: #fff; }
+button:disabled { opacity: .5; cursor: default; transform: none; box-shadow: var(--shadow-sm); }
+
+.choice { display: block; width: 100%; text-align: left; margin: 0 0 .65rem; font-weight: 600; }
+.choice.picked   { background: var(--accent-soft); }
+.choice.correct  { background: var(--accent-soft); border-color: var(--good); }
+.choice.wrong    { background: var(--bad-soft);   border-color: var(--bad); }
+
+.explain {
+  border-left: 5px solid var(--line-soft);
+  background: #f4f7fb;
+  border-radius: 0 8px 8px 0;
+  padding: .6rem .9rem;
+  margin: .4rem 0 1.4rem;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.explain.good { border-color: var(--good); background: var(--accent-soft); color: var(--ink); }
+.explain.bad  { border-color: var(--bad);  background: var(--bad-soft);   color: var(--ink); }
+
+.note {
+  background: var(--warn-soft);
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: .8rem 1rem;
+  font-size: .93rem;
+  margin: 1.2rem 0;
+}
+
+.meter {
+  height: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--panel);
+  overflow: hidden;
+}
+.meter > i { display: block; height: 100%; background: var(--accent); }
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  font-size: .95rem;
+  margin: 1rem 0;
+  background: var(--panel);
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+th, td { border-bottom: 1px solid var(--line-soft); padding: .45rem .65rem; text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+thead th { background: #eef2f8; border-bottom: 2px solid var(--ink); font-weight: 700; }
+tbody tr:last-child td { border-bottom: none; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+.muted { color: var(--muted); }
+.small { font-size: .88rem; }
+footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
+
+/* ลูกเล่นระดับเดียวกับเว็บอ้างอิง — pulse กับ bounce เท่านั้น */
+@keyframes pulse { 50% { opacity: .55; } }
+.pulse { animation: pulse 1.5s ease-in-out infinite; }
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-25%); }
+}
+.bounce { display: inline-block; animation: bounce 1s ease-in-out infinite; }

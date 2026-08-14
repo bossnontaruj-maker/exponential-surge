@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เกมจำลอง — รักษ์สัตว์ คลินิก</title>
+<link rel="stylesheet" href="../engine/style.css">
+<style>
+  .opt { display:block; width:100%; text-align:left; margin:0 0 .6rem; padding:.85rem 1rem; }
+  .opt small { display:block; color:var(--muted); margin-top:.3rem; font-size:.86rem; }
+  .scene { white-space:pre-line; }
+  table.years td, table.years th { padding:.35rem .5rem; font-size:.9rem; }
+  .locked-round { opacity:.45; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>🐾 รักษ์สัตว์ คลินิก — เกมจำลอง</h1>
+  <p class="lede" id="lede"></p>
+
+  <div id="app"></div>
+
+  <h2>รอบที่ยังไม่เปิด</h2>
+  <div id="locked"></div>
+
+  <footer>
+    ทุกตัวเลขในหน้านี้คำนวณจาก <code>sim/model.js</code> ไม่มีค่าที่กำหนดไว้ล่วงหน้า —
+    ตรวจสอบได้ด้วย <code>node sim/test_model.js</code><br>
+    งบตั้งต้นอยู่ที่ <a href="../knowledge/case-company.md">knowledge/case-company.md</a>
+  </footer>
+
+  <p style="margin-top:1.5rem"><a href="../index.html">← กลับหน้าหลัก</a></p>
+</div>
+
+<script src="model.js"></script>
+<script src="rounds.js"></script>
+<script src="../engine/srs.js"></script>
+<script src="unlock.js"></script>
+<script>
+const LEVEL = unlockLevel();
+const SHOW  = visibleMetrics(LEVEL);
+const SCORE = scoreFor(LEVEL);
+const VAL_OPTS = { wacc: 0.09, terminalGrowth: 0.03, terminalROIC: 0.15, minCash: RSC_2025.minCash };
+const YEARS = 5;
+
+document.getElementById("lede").innerHTML =
+  `คุณคือเจ้าของ RSC ปี 2025 · 12 สาขา · รายได้ 392 ล้านบาท · ต้นทุนเงินทุน 9%<br>
+   <span class="small muted">ปลดล็อกระดับ ${LEVEL} — เห็นตัวเลข ${SHOW.length} ตัว
+   และตัดสินผลด้วย<strong> ${SCORE.label}</strong></span>`;
+
+const money = n => (Math.round(n * 10) / 10).toLocaleString("th-TH", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+/* ตัวเลขนับขึ้นตอนโชว์ผล — ลูกเล่นเดียวที่เพิ่มนอกเหนือจาก pulse ตามระดับเว็บอ้างอิง */
+function countUp(el, target) {
+  const t0 = performance.now(), dur = 700;
+  function tick(t) {
+    const p = Math.min(1, (t - t0) / dur);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = money(target * eased);
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const fmt = (m, v) => m.fmt === "pct" ? (v * 100).toFixed(1) + "%"
+                    : m.fmt === "int" ? Math.round(v).toLocaleString("th-TH")
+                    : money(v);
+
+/** เดินโมเดล: ตัดสินใจรอบ 1 แล้วปีที่เหลือปล่อยตามเดิม */
+function play(decision) {
+  const path = runPath(RSC_2025, [decision].concat(new Array(YEARS - 1).fill({})));
+  const value = valuePath(path.rows, VAL_OPTS);
+  const cumulativeEP = path.rows.reduce((s, r) => s + r.economicProfit, 0);
+  const totalInterest = path.rows.reduce((s, r) => s + r.interest, 0);
+  const drew = path.rows.filter(r => r.emergencyDraw > 0);
+  return { path, value, cumulativeEP, totalInterest, drew,
+           score: SCORE.key === "cumulativeEP" ? cumulativeEP : value.enterpriseValue };
+}
+
+const app = document.getElementById("app");
+
+function showRound() {
+  const r = ROUNDS[0];
+  app.innerHTML = `
+    <div class="card">
+      <div class="row"><strong>${r.icon || ""} รอบที่ ${r.id} · ปี ${r.year}</strong><span class="tag">${r.title}</span></div>
+      <p class="scene" style="margin-top:.7rem">${r.scene}</p>
+      <div class="note small">${r.note}</div>
+    </div>`;
+
+  r.options.forEach(o => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = `<strong>${o.label}</strong><small>${o.detail}</small>`;
+    b.onclick = () => showResult(o);
+    app.appendChild(b);
+  });
+}
+
+function showResult(chosen) {
+  const mine = play(chosen.decision);
+  const base = play({});                       // เส้นเปรียบเทียบ: ไม่ทำอะไร คำนวณด้วยโมเดลตัวเดียวกัน
+  const diff = mine.score - base.score;
+
+  app.innerHTML = "";
+
+  const head = document.createElement("div");
+  head.className = "card";
+  head.innerHTML = `
+    <div class="row"><strong>${chosen.label}</strong><span class="tag plain">ปี ${ROUNDS[0].year}</span></div>
+    <div class="small muted" style="margin:.3rem 0 .9rem">${chosen.detail}</div>
+    <div class="row"><span>${SCORE.label}</span><span class="stat big">${money(mine.score)}</span></div>
+    <div class="row"><span class="small muted">ถ้าไม่ขยายเลย</span><span class="stat muted">${money(base.score)}</span></div>
+    <div class="row"><span class="small muted">ต่างกัน</span>
+      <span class="stat" style="color:${diff >= 0 ? "var(--good)" : "var(--bad)"}">${diff >= 0 ? "+" : ""}${money(diff)} ล้านบาท</span></div>
+    <div class="small muted" style="margin-top:.6rem">${SCORE.hint}</div>`;
+  app.appendChild(head);
+  countUp(head.querySelector(".stat.big"), mine.score);
+
+  if (mine.drew.length) {
+    const warn = document.createElement("div");
+    warn.className = "note";
+    warn.innerHTML = `<strong><span class="pulse">🚨</span> เงินสดไม่พอ ระบบเบิกวงเงินฉุกเฉินให้อัตโนมัติ</strong><br>
+      ปี ${mine.drew[0].year} เบิก ${money(mine.drew[0].emergencyDraw)} ล้านบาท ที่ดอกเบี้ย
+      ${(RSC_2025.debtRate * 100).toFixed(0)}% ต่อปี · ดอกเบี้ยจ่ายรวมตลอด 5 ปี
+      <strong>${money(mine.totalInterest)} ล้านบาท</strong><br>
+      <span class="small">การตัดสินใจที่กำไรดีก็ทำให้เจ๊งได้ ถ้าเงินสดในมือไม่พอจ่ายระหว่างทาง</span>`;
+    app.appendChild(warn);
+  }
+
+  // ตารางรายปี แสดงเฉพาะตัวเลขที่ปลดล็อกแล้ว
+  const t = document.createElement("table");
+  t.className = "years";
+  t.innerHTML = `<thead><tr><th>รายการ</th>${mine.path.rows.map(r => `<th>${r.year}</th>`).join("")}</tr></thead>`;
+  const tb = document.createElement("tbody");
+  SHOW.forEach(m => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${m.label}</td>` +
+      mine.path.rows.map(r => `<td class="num">${fmt(m, r[m.key])}</td>`).join("");
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+  app.appendChild(t);
+
+  const why = document.createElement("div");
+  why.className = "explain";
+  why.innerHTML = `<strong>สิ่งที่ทางเลือกนี้สอน:</strong> ${chosen.teaches}`;
+  app.appendChild(why);
+
+  const compare = document.createElement("button");
+  compare.className = "primary";
+  compare.textContent = "เทียบกับทางเลือกอื่นทั้งหมด";
+  compare.onclick = () => showCompare(chosen);
+  app.appendChild(compare);
+
+  const again = document.createElement("button");
+  again.textContent = "เล่นรอบนี้ใหม่";
+  again.onclick = showRound;
+  app.appendChild(again);
+}
+
+function showCompare(chosen) {
+  const rows = ROUNDS[0].options.map(o => {
+    const p = play(o.decision);
+    return { o, p };
+  }).sort((a, b) => b.p.score - a.p.score);
+
+  const t = document.createElement("table");
+  t.innerHTML = `<thead><tr><th>ทางเลือก</th><th>${SCORE.label}</th><th>เงินสดต่ำสุด</th><th>ดอกเบี้ยรวม</th></tr></thead>`;
+  const tb = document.createElement("tbody");
+  rows.forEach(({ o, p }) => {
+    const minCash = Math.min.apply(null, p.path.rows.map(r => r.cash));
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      `<td>${o.id === chosen.id ? "<strong>" + o.label + " ← ที่คุณเลือก</strong>" : o.label}</td>
+       <td class="num">${money(p.score)}</td>
+       <td class="num">${money(minCash)}</td>
+       <td class="num">${p.totalInterest > 0 ? money(p.totalInterest) : "—"}</td>`;
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+
+  const box = document.createElement("div");
+  box.innerHTML = "<h2>เทียบทุกทางเลือก</h2>";
+  box.appendChild(t);
+  box.insertAdjacentHTML("beforeend", `
+    <div class="note small">
+      <strong>อ่านตารางนี้ให้ออก:</strong> ทางที่ได้คะแนนสูงสุดคือทางที่เงินสดตึงที่สุด
+      นั่นไม่ใช่ความบังเอิญ — การลงทุนที่ ROIC สูงกว่าต้นทุนเงินทุนย่อมสร้างมูลค่า
+      แต่มันกินเงินสดวันนี้เพื่อแลกกำไรวันหน้า และตัวเลขนี้ตั้งอยู่บนสมมติฐานว่าอนาคตเป็นไปตามคาด
+      รอบที่ 2 คือปีที่อนาคตไม่เป็นไปตามคาด
+    </div>`);
+
+  // เกณฑ์ปัจจุบันกับเกณฑ์มูลค่าอาจจัดอันดับไม่ตรงกัน — ถ้าไม่ตรง ต้องบอก ไม่ใช่ปล่อยให้เข้าใจผิด
+  const byEP = rows.slice().sort((a, b) => b.p.cumulativeEP - a.p.cumulativeEP)[0];
+  const byEV = rows.slice().sort((a, b) => b.p.value.enterpriseValue - a.p.value.enterpriseValue)[0];
+  if (SCORE.key === "cumulativeEP" && byEP.o.id !== byEV.o.id) {
+    const worstByEP = rows.slice().sort((a, b) => a.p.cumulativeEP - b.p.cumulativeEP)[0];
+    box.insertAdjacentHTML("beforeend", `
+      <div class="explain bad">
+        <strong>จุดบอดของเกณฑ์ที่คุณกำลังใช้อยู่</strong><br>
+        เกณฑ์นี้นับกำไรเชิงเศรษฐศาสตร์แค่ถึงปี 2030 แล้วหยุด
+        “${worstByEP.o.label}” จึงได้อันดับท้ายสุด เพราะมันจ่ายเงินก้อนใหญ่วันนี้
+        เพื่อกำลังผลิตที่ยังใช้ไม่เต็มในช่วง 5 ปีแรก<br><br>
+        แต่กำลังผลิตนั้นไม่ได้หายไปในปี 2031 — มันทำเงินต่อไปอีกหลายสิบปี
+        <strong>ด้วยเกณฑ์ที่มองเห็นมูลค่าหลังปี 2030 อันดับหนึ่งจะกลายเป็น
+        “${byEV.o.label}” แทน</strong><br><br>
+        นี่คือโรคระยะสั้นในรูปแบบตัวเลข — ไม่ใช่เพราะคุณคิดผิด แต่เพราะเครื่องมือวัดมองไม่ไกลพอ
+        โมดูล 6 จะให้เครื่องมือที่มองเห็น แล้วกลับมาเล่นรอบนี้ใหม่
+      </div>`);
+  }
+
+  app.appendChild(box);
+  box.scrollIntoView({ behavior: "smooth" });
+}
+
+// รอบที่ยังไม่เปิด
+document.getElementById("locked").innerHTML = ROUND_PLACEHOLDERS.map(r => `
+  <div class="card locked-round">
+    <div class="row"><strong>${r.icon || ""} รอบที่ ${r.id} · ปี ${r.year} — ${r.title}</strong>
+      <span class="tag plain">🔒 เปิดหลัง${r.unlockedBy}</span></div>
+  </div>`).join("");
+
+showRound();
+</script>
+</body>
+</html>

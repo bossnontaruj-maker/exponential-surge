@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exponential Surge — หลักสูตรการเงิน</title>
+<link rel="stylesheet" href="engine/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <h1 id="title"></h1>
+  <p class="lede" id="goal"></p>
+
+  <div class="card">
+    <div class="row">
+      <span>ความคืบหน้า</span>
+      <span><span class="stat" id="doneCount">0</span> <span class="muted">/ <span id="totalCount">0</span> โมดูล</span></span>
+    </div>
+    <div class="meter" style="margin:.6rem 0 .9rem"><i id="bar" style="width:0%"></i></div>
+    <div class="row">
+      <span class="small muted" id="dueLine"></span>
+      <a href="review.html"><button>ไปหน้าทบทวน</button></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <strong>🐾 เกมจำลอง รักษ์สัตว์ คลินิก</strong>
+      <span class="tag" id="simLevel"></span>
+    </div>
+    <div class="small muted" style="margin:.35rem 0 .8rem">
+      แกนกลางของหลักสูตร — บริหาร RSC 5 ปี ทุกโมดูลที่เรียนจบจะปลดล็อกตัวเลขหรือคันโยกเพิ่มในเกมตัวนี้
+      ตัวเลขทุกตัวคำนวณจากโมเดลเดียวกับที่คุณจะสร้างเองใน Google Sheets ตอน capstone
+    </div>
+    <button class="primary" onclick="location.href=CURRICULUM.sim.file">เข้าเกม</button>
+  </div>
+
+  <div class="note small">
+    <strong>บริษัทที่เดินเรื่องทั้งหลักสูตร:</strong> <span id="caseCo"></span><br>
+    งบการเงินอยู่ที่ <code>knowledge/case-company.md</code> — เปิดค้างไว้ตอนเรียนได้เลย
+  </div>
+
+  <h2>โมดูล</h2>
+  <div id="modules"></div>
+
+  <h2>สถานะ</h2>
+  <div class="card small">
+    <p class="muted" style="margin-bottom:.7rem">
+      เบราว์เซอร์เขียนไฟล์บนดิสก์เองไม่ได้ ความคืบหน้าจึงเก็บอยู่ในเบราว์เซอร์
+      กด “ส่งออก” แล้วบันทึกทับ <code>progress.json</code> เมื่อต้องการให้ Claude เห็นสถานะล่าสุด
+    </p>
+    <button class="primary" onclick="exportProgress()">ส่งออก progress.json</button>
+    <button onclick="document.getElementById('imp').click()">นำเข้า</button>
+    <input type="file" id="imp" accept="application/json" hidden>
+  </div>
+
+  <footer>
+    เนื้อหาเรียบเรียงใหม่เป็นภาษาไทย อ้างอิงแนวคิดจาก <span id="src"></span><br>
+    ไม่ใช่งานแปล และไม่ทำซ้ำข้อความต้นฉบับ
+  </footer>
+</div>
+
+<script src="data/curriculum.js"></script>
+<script src="engine/srs.js"></script>
+<script>
+document.getElementById("title").textContent  = "📊 " + CURRICULUM.title;
+document.getElementById("goal").textContent   = CURRICULUM.goal;
+document.getElementById("caseCo").textContent = CURRICULUM.caseCompany;
+document.getElementById("src").textContent    =
+  SOURCES["mckinsey-valuation-7e"].title + " — " + SOURCES["mckinsey-valuation-7e"].edition;
+
+function draw() {
+  const host = document.getElementById("modules");
+  host.innerHTML = "";
+  let done = 0;
+
+  CURRICULUM.modules.forEach(m => {
+    const st = moduleState(m.id);
+    if (st.completed) done++;
+
+    const card = document.createElement("div");
+    card.className = "card" + (st.completed ? " done" : m.status === "planned" ? " locked" : "");
+
+    const tag = st.completed ? `<span class="tag">จบแล้ว ${st.completed}</span>`
+              : m.status === "planned" ? `<span class="tag plain">ยังไม่สร้าง</span>`
+              : `<span class="tag">พร้อมเรียน</span>`;
+
+    card.innerHTML = `
+      <div class="row">
+        <strong>${m.icon ? m.icon + " " : ""}${m.id}. ${m.title}</strong>
+        ${tag}
+      </div>
+      <div class="small muted">${m.subtitle}</div>
+      <div class="small muted" style="margin-top:.35rem">${m.sourceRef} · ปลดล็อกในเกม: ${m.simUnlock}</div>`;
+
+    if (m.status === "ready") {
+      const bar = document.createElement("div");
+      bar.style.marginTop = ".7rem";
+
+      const read = document.createElement("button");
+      read.className = "primary";
+      read.textContent = "เริ่มที่นี่ — อ่านเนื้อหา";
+      read.onclick = () => location.href = `modules/${m.dir}/concept.html`;
+      bar.appendChild(read);
+
+      const game = document.createElement("button");
+      game.textContent = "เกมจำลอง";
+      game.onclick = () => location.href = `${CURRICULUM.sim.file}?unlock=${Number(m.id)}`;
+      bar.appendChild(game);
+
+      const quiz = document.createElement("button");
+      quiz.textContent = "ควิซ";
+      quiz.onclick = () => location.href = `modules/${m.dir}/quiz.html`;
+      bar.appendChild(quiz);
+
+      card.appendChild(bar);
+
+      const gate = document.createElement("div");
+      gate.className = "small";
+      gate.style.marginTop = ".8rem";
+      gate.innerHTML = `<span class="muted">เกณฑ์ผ่านโมดูล:</span> `;
+
+      [["notesDone", "เขียน notes.md อธิบายกลับแล้ว"], ["caseDone", "ทำ case.md แล้ว"]].forEach(([flag, label]) => {
+        const cb = document.createElement("label");
+        cb.style.marginRight = "1rem";
+        const box = document.createElement("input");
+        box.type = "checkbox";
+        box.checked = !!st[flag];
+        box.onchange = () => { setModuleFlag(m.id, flag, box.checked); draw(); };
+        cb.appendChild(box);
+        cb.appendChild(document.createTextNode(" " + label));
+        gate.appendChild(cb);
+      });
+      card.appendChild(gate);
+    }
+
+    host.appendChild(card);
+  });
+
+  const total = CURRICULUM.modules.length;
+  document.getElementById("doneCount").textContent  = done;
+  document.getElementById("totalCount").textContent = total;
+  document.getElementById("bar").style.width = (done / total * 100) + "%";
+
+  const due = dueCards().length;
+  document.getElementById("dueLine").textContent =
+    due ? `มีคำถามถึงกำหนดทบทวน ${due} ข้อ` : "วันนี้ไม่มีคำถามที่ถึงกำหนดทบทวน";
+
+  // ระดับปลดล็อก = เลขโมดูลสูงสุดที่ผ่านแล้ว ไม่ใช่จำนวนโมดูลที่ผ่าน (เผื่อเรียนข้ามลำดับ)
+  const maxDone = CURRICULUM.modules
+    .filter(m => moduleState(m.id).completed)
+    .reduce((mx, m) => Math.max(mx, Number(m.id)), 0);
+  document.getElementById("simLevel").textContent =
+    maxDone ? `ปลดล็อกถึงโมดูล ${maxDone}` : "ปลดล็อกระดับ 1";
+}
+
+document.getElementById("imp").onchange = e => {
+  if (e.target.files[0]) importProgress(e.target.files[0], err => {
+    if (err) alert("นำเข้าไม่สำเร็จ: " + err.message); else draw();
+  });
+};
+
+draw();
+</script>
+</body>
+</html>
