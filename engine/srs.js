@@ -95,11 +95,17 @@ function importProgress(file, done) {
   const reader = new FileReader();
   reader.onload = () => {
     try {
-      localStorage.setItem(STORE_KEY, reader.result);
+      // ตรวจโครงก่อนเขียนทับ — ไฟล์ผิดต้องไม่ทำลาย progress ที่มีอยู่
+      const data = JSON.parse(reader.result);
+      if (!data || typeof data !== "object" ||
+          typeof data.modules !== "object" || typeof data.cards !== "object")
+        throw new Error("ไม่ใช่ไฟล์ progress.json ของระบบนี้");
+      localStorage.setItem(STORE_KEY, JSON.stringify(data));
       done(null);
     } catch (e) {
       done(e);
     }
   };
+  reader.onerror = () => done(reader.error || new Error("อ่านไฟล์ไม่สำเร็จ"));
   reader.readAsText(file);
 }

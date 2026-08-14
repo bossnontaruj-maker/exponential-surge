@@ -25,11 +25,19 @@ function renderQuiz(root, moduleId, questions, opts) {
     stem.textContent = q.q;
     root.appendChild(stem);
 
+    // สุ่มลำดับตัวเลือกทุกครั้งที่แสดง — กันการจำตำแหน่งคำตอบแทนการจำเนื้อหา
+    const order = q.choices.map((_, idx) => idx);
+    for (let k = order.length - 1; k > 0; k--) {
+      const j = Math.floor(Math.random() * (k + 1));
+      [order[k], order[j]] = [order[j], order[k]];
+    }
+
     const buttons = [];
-    q.choices.forEach((text, idx) => {
+    order.forEach(idx => {
       const b = document.createElement("button");
       b.className = "choice";
-      b.textContent = text;
+      b.textContent = q.choices[idx];
+      b.dataset.idx = idx;
       b.onclick = () => answer(idx, buttons, q);
       buttons.push(b);
       root.appendChild(b);
@@ -39,8 +47,9 @@ function renderQuiz(root, moduleId, questions, opts) {
   function answer(picked, buttons, q) {
     const correct = picked === q.answer;
     if (correct) score++;
-    buttons.forEach((b, idx) => {
+    buttons.forEach(b => {
       b.disabled = true;
+      const idx = Number(b.dataset.idx);
       if (idx === q.answer) b.classList.add("correct");
       else if (idx === picked) b.classList.add("wrong");
     });
