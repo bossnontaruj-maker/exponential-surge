@@ -114,6 +114,11 @@ function draw() {
       quiz.onclick = () => location.href = `modules/${m.dir}/quiz.html`;
       bar.appendChild(quiz);
 
+      const kase = document.createElement("button");
+      kase.textContent = "เคส";
+      kase.onclick = () => location.href = `modules/${m.dir}/case.html`;
+      bar.appendChild(kase);
+
       card.appendChild(bar);
 
       const gate = document.createElement("div");
@@ -121,7 +126,7 @@ function draw() {
       gate.style.marginTop = ".8rem";
       gate.innerHTML = `<span class="muted">เกณฑ์ผ่านโมดูล:</span> `;
 
-      [["notesDone", "เขียน notes.md อธิบายกลับแล้ว"], ["caseDone", "ทำ case.md แล้ว"]].forEach(([flag, label]) => {
+      [["notesDone", "เขียนสมุดบันทึกอธิบายกลับแล้ว"], ["caseDone", "ทำข้อสอบเคสแล้ว"]].forEach(([flag, label]) => {
         const cb = document.createElement("label");
         cb.style.marginRight = "1rem";
         const box = document.createElement("input");

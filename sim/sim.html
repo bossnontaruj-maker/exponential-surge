@@ -30,15 +30,21 @@
     งบตั้งต้นอยู่ที่ <a href="../knowledge/case-company.md">knowledge/case-company.md</a>
   </footer>
 
-  <p style="margin-top:1.5rem"><a href="../index.html">← กลับหน้าหลัก</a></p>
+  <p style="margin-top:1.5rem"><a href="../index.html">← กลับหน้าหลัก</a><span id="nextStep"></span></p>
 </div>
 
 <script src="model.js"></script>
 <script src="rounds.js"></script>
 <script src="../engine/srs.js"></script>
 <script src="unlock.js"></script>
+<script src="../data/curriculum.js"></script>
 <script>
 const LEVEL = unlockLevel();
+
+// เส้นทางเดียวจบ: เล่นเกมเสร็จแล้วไปควิซของโมดูลที่กำลังเรียนต่อได้เลย
+const NEXT_MOD = CURRICULUM.modules.find(m => Number(m.id) === LEVEL && m.status === "ready");
+if (NEXT_MOD) document.getElementById("nextStep").innerHTML =
+  ` · <strong><a href="../modules/${NEXT_MOD.dir}/quiz.html">ถัดไป: ทำควิซโมดูล ${Number(NEXT_MOD.id)} →</a></strong>`;
 const SHOW  = visibleMetrics(LEVEL);
 const SCORE = scoreFor(LEVEL);
 const VAL_OPTS = { wacc: 0.09, terminalGrowth: 0.03, terminalROIC: 0.15, minCash: RSC_2025.minCash };
