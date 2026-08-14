@@ -48,6 +48,17 @@ python -m http.server 8765
 เบราว์เซอร์เขียนไฟล์บนดิสก์เองไม่ได้ สถานะจริงจึงอยู่ใน localStorage
 กด **ส่งออก progress.json** ที่หน้าแรกแล้วบันทึกทับไฟล์ `progress.json` เมื่อต้องการให้ Claude เห็นสถานะล่าสุด
 
+## แชร์ให้คนอื่น
+
+เว็บสาธารณะ (อัปเดตด้วยคำสั่งด้านล่าง): **https://bossnontaruj-maker.github.io/exponential-surge/**
+
+```bash
+python scripts/export_share.py
+```
+
+คำสั่งเดียวได้ทั้งสองอย่าง: ไฟล์ `Exponential-Surge-share.zip` ไว้ส่งทาง LINE/อีเมล และ push ขึ้นเว็บอัตโนมัติ
+ไฟล์ส่วนตัว (notes, insights, progress, `_source/`) ถูกตัดออกเสมอ มีด่านตรวจกันหลุดในสคริปต์
+
 ## เพิ่มหนังสือเล่มใหม่ / สร้างโมดูลถัดไป
 
 พิมพ์บอก Claude ได้เลย — skill `add-source` รู้กติกาทั้งหมดของโปรเจกต์นี้แล้ว

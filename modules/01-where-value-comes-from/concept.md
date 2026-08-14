@@ -11,6 +11,18 @@
 
 ถ้าเขากำไรโตจาก 40 เป็น 50 ล้านบาท (โต 25%) แต่ต้องเปิดสาขาใหม่ ซื้อเครื่องอัลตราซาวด์ เพิ่มสต็อกยา รวมแล้วลงเงินเพิ่มไป 150 ล้าน คำถามคือเงิน 150 ล้านนั้นถ้าเอาไปทำอย่างอื่นจะได้ผลตอบแทนดีกว่าไหม
 
+<figure class="fig">
+<svg viewBox="0 0 640 170" role="img" aria-label="เทียบกำไรที่เพิ่มขึ้น 10 ล้านบาท กับเงินที่ต้องลงเพิ่ม 150 ล้านบาท">
+  <text x="10" y="24" font-size="15" font-weight="700" fill="var(--ink)">กำไรที่เพิ่มขึ้น</text>
+  <rect x="10" y="34" width="30" height="30" rx="4" fill="var(--accent)" stroke="var(--ink)" stroke-width="2.5"/>
+  <text x="52" y="56" font-size="16" font-weight="700" fill="var(--ink)" class="num">+10 ล้าน</text>
+  <text x="10" y="104" font-size="15" font-weight="700" fill="var(--ink)">เงินที่ต้องลงเพิ่มเพื่อให้ได้กำไรนั้น</text>
+  <rect x="10" y="114" width="450" height="30" rx="4" fill="var(--bad)" stroke="var(--ink)" stroke-width="2.5"/>
+  <text x="472" y="136" font-size="16" font-weight="700" fill="var(--bad)" class="num">150 ล้าน</text>
+</svg>
+<figcaption>กำไรโต 25% ฟังดูหรู — จนวางเงินสองก้อนบนสเกลเดียวกัน: ทุก 1 บาทของกำไรที่เพิ่ม ต้องเอาเงินไปจมเพิ่ม 15 บาท</figcaption>
+</figure>
+
 นี่คือความคิดทั้งหมดของโมดูลนี้ และจริงๆ แล้วเป็นความคิดทั้งหมดของหนังสือทั้งเล่ม กำไรเป็นตัวเลขที่ไม่สมบูรณ์ เพราะมันบอกแค่ว่า "ได้อะไรมา" แต่ไม่บอกว่า "ต้องเอาอะไรไปแลก"
 
 เทียบกับงานของคุณ: คลินิกที่รักษาสัตว์หายวันละ 30 ตัว ฟังดูดีกว่าคลินิกที่รักษาหายวันละ 10 ตัว — จนกว่าคุณจะรู้ว่าคลินิกแรกใช้สัตวแพทย์ 8 คน ส่วนคลินิกที่สองใช้คนเดียว ตัวเลขดิบไม่มีความหมายจนกว่าจะหารด้วยทรัพยากรที่ใช้ไป
@@ -34,6 +46,26 @@
 **ROIC = 47.0 ÷ 232 = 20.3%**
 
 แปลเป็นภาษาคน: ทุกๆ 100 บาทที่จมอยู่ในคลินิก มันคายเงินกลับมาให้ปีละ 20.3 บาท
+
+<figure class="fig">
+<svg viewBox="0 0 640 255" role="img" aria-label="เงินทุนหมุนเวียนบวกที่ดินอาคารอุปกรณ์ รวมเป็นเงินทุนที่ลงไป 232 ล้าน เอา NOPAT 47 ล้านมาหาร ได้ ROIC 20.3 เปอร์เซ็นต์">
+  <rect x="15" y="14" width="280" height="62" rx="8" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="3"/>
+  <text x="155" y="40" font-size="15" font-weight="700" fill="var(--ink)" text-anchor="middle">เงินทุนหมุนเวียน</text>
+  <text x="155" y="61" font-size="12.5" fill="var(--muted)" text-anchor="middle">สต็อกยา + ลูกหนี้ − เจ้าหนี้</text>
+  <text x="320" y="52" font-size="24" font-weight="700" fill="var(--ink)" text-anchor="middle">+</text>
+  <rect x="345" y="14" width="280" height="62" rx="8" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="3"/>
+  <text x="485" y="40" font-size="15" font-weight="700" fill="var(--ink)" text-anchor="middle">ที่ดิน อาคาร อุปกรณ์</text>
+  <text x="485" y="61" font-size="12.5" fill="var(--muted)" text-anchor="middle">ตึกคลินิก เครื่องเอกซเรย์ เตียงผ่าตัด</text>
+  <line x1="320" y1="80" x2="320" y2="100" stroke="var(--ink)" stroke-width="3"/>
+  <polygon points="313,98 327,98 320,110" fill="var(--ink)"/>
+  <rect x="170" y="114" width="300" height="58" rx="8" fill="var(--panel)" stroke="var(--ink)" stroke-width="3"/>
+  <text x="320" y="138" font-size="15" font-weight="700" text-anchor="middle" fill="var(--ink)">เงินทุนที่ลงไป (invested capital)</text>
+  <text x="320" y="162" font-size="17" font-weight="700" text-anchor="middle" fill="var(--ink)" class="num">232 ล้านบาท</text>
+  <text x="320" y="214" font-size="18" text-anchor="middle" fill="var(--ink)">ROIC = <tspan font-weight="700" class="num">47.0 ÷ 232</tspan> = <tspan font-weight="700" fill="var(--good)" font-size="22" class="num">20.3%</tspan></text>
+  <text x="320" y="242" font-size="13" text-anchor="middle" fill="var(--muted)">ทุก 100 บาทที่จมอยู่ในคลินิก คายกลับมาปีละ 20.3 บาท</text>
+</svg>
+<figcaption>สองก้อนบนคือเงินที่จมอยู่ในกิจการ · NOPAT (47.0 ล้าน) คือกำไรจากการดำเนินงานหลังภาษี ก่อนหักดอกเบี้ย — หารกันได้ตัวเลขที่ทั้งเล่มหมุนรอบมัน</figcaption>
+</figure>
 
 ## 3. เกณฑ์เปรียบเทียบ: ค่าเสียโอกาส
 
@@ -63,6 +95,27 @@
 
 แถวสุดท้ายขัดสัญชาตญาณที่สุด — การเติบโตไม่ใช่ของดีเสมอไป ถ้าธุรกิจให้ผลตอบแทนต่ำกว่าค่าเสียโอกาส การขยายกิจการคือการเร่งเผาเงินให้เร็วขึ้น
 
+<figure class="fig">
+<svg viewBox="0 0 640 250" role="img" aria-label="กราฟสามเส้น: ROIC สูงกว่าต้นทุนเงินทุน ยิ่งโตมูลค่ายิ่งขึ้น เท่ากันมูลค่าคงที่ ต่ำกว่ายิ่งโตมูลค่ายิ่งลด">
+  <line x1="55" y1="20" x2="55" y2="205" stroke="var(--ink)" stroke-width="3"/>
+  <line x1="55" y1="205" x2="435" y2="205" stroke="var(--ink)" stroke-width="3"/>
+  <polygon points="55,12 49,24 61,24" fill="var(--ink)"/>
+  <polygon points="443,205 431,199 431,211" fill="var(--ink)"/>
+  <text x="14" y="16" font-size="13" fill="var(--muted)">มูลค่า</text>
+  <text x="360" y="228" font-size="13" fill="var(--muted)">การเติบโต →</text>
+  <path d="M55 112 L425 30" stroke="var(--good)" stroke-width="5" fill="none"/>
+  <path d="M55 112 L425 112" stroke="var(--muted)" stroke-width="5" stroke-dasharray="10 7" fill="none"/>
+  <path d="M55 112 L425 195" stroke="var(--bad)" stroke-width="5" fill="none"/>
+  <text x="442" y="32" font-size="14" font-weight="700" fill="var(--good)">ROIC &gt; ต้นทุนเงินทุน</text>
+  <text x="442" y="50" font-size="12.5" fill="var(--muted)">โตยิ่งมาก ยิ่งสร้างมูลค่า</text>
+  <text x="442" y="112" font-size="14" font-weight="700" fill="var(--muted)">ROIC = ต้นทุนเงินทุน</text>
+  <text x="442" y="130" font-size="12.5" fill="var(--muted)">ตัวใหญ่ขึ้น มูลค่าเท่าเดิม</text>
+  <text x="442" y="196" font-size="14" font-weight="700" fill="var(--bad)">ROIC &lt; ต้นทุนเงินทุน</text>
+  <text x="442" y="214" font-size="12.5" fill="var(--muted)">โตยิ่งมาก ยิ่งทำลาย</text>
+</svg>
+<figcaption>กฎข้อเดียวของทั้งเล่มในภาพเดียว — เส้นล่างคือแถวที่คนพลาด: ธุรกิจที่แพ้ค่าเสียโอกาส ยิ่งขยายยิ่งเผาเงินเร็วขึ้น</figcaption>
+</figure>
+
 ## 5. กรณีคลาสสิก: โตเร็วกว่าแต่แย่กว่า
 
 หนังสือเล่าเรื่อง Lily กับ Nate เจ้าของเชนร้านเสื้อผ้า ที่มี ROIC 18% ขณะที่ค่าเสียโอกาสอยู่ที่ 10% และโตปีละ 5%
@@ -70,6 +123,32 @@
 วันหนึ่งพวกเขาเห็นญาติชื่อ Logan ที่ทำร้านเหมือนกันแต่กำไรโตเร็วกว่ามาก จนเริ่มคิดว่าตัวเองบริหารพลาด
 
 พอตรวจดูจริงพบว่า Logan โตเร็วเพราะ **อัดเงินลงทุนหนักมาก** กำไรโตจริง แต่ ROIC ไหลลงเรื่อยๆ และกระแสเงินสดก็ลดลงตาม — เขากำลังซื้อการเติบโตด้วยราคาที่แพงเกินไป
+
+<figure class="fig">
+<svg viewBox="0 0 640 265" role="img" aria-label="สองกราฟเทียบ Lily กับ Logan: กำไรของ Logan โตเร็วกว่า แต่ ROIC ของ Logan ไหลลงต่ำกว่าค่าเสียโอกาส 10 เปอร์เซ็นต์">
+  <text x="162" y="24" font-size="15" font-weight="700" text-anchor="middle" fill="var(--ink)">กำไร — Logan ดูเหมือนชนะ</text>
+  <text x="482" y="24" font-size="15" font-weight="700" text-anchor="middle" fill="var(--ink)">ROIC — ความจริงโผล่</text>
+  <line x1="40" y1="40" x2="40" y2="190" stroke="var(--ink)" stroke-width="2.5"/>
+  <line x1="40" y1="190" x2="285" y2="190" stroke="var(--ink)" stroke-width="2.5"/>
+  <path d="M40 172 L275 118" stroke="var(--accent)" stroke-width="5" fill="none"/>
+  <path d="M40 172 L275 56" stroke="var(--ink)" stroke-width="5" fill="none"/>
+  <text x="180" y="215" font-size="13" fill="var(--muted)">เวลา →</text>
+  <line x1="360" y1="40" x2="360" y2="190" stroke="var(--ink)" stroke-width="2.5"/>
+  <line x1="360" y1="190" x2="605" y2="190" stroke="var(--ink)" stroke-width="2.5"/>
+  <line x1="360" y1="140" x2="605" y2="140" stroke="var(--bad)" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="600" y="133" font-size="12.5" font-weight="700" fill="var(--bad)" text-anchor="end">ค่าเสียโอกาส 10%</text>
+  <path d="M360 100 L595 100" stroke="var(--accent)" stroke-width="5" fill="none"/>
+  <text x="600" y="96" font-size="12.5" font-weight="700" fill="var(--accent)" text-anchor="end">Lily 18% นิ่ง</text>
+  <path d="M360 88 L595 178" stroke="var(--ink)" stroke-width="5" fill="none"/>
+  <text x="560" y="185" font-size="12.5" font-weight="700" fill="var(--ink)" text-anchor="end">Logan ไหลลง</text>
+  <text x="500" y="215" font-size="13" fill="var(--muted)">เวลา →</text>
+  <rect x="180" y="235" width="26" height="8" rx="2" fill="var(--accent)"/>
+  <text x="214" y="245" font-size="13" fill="var(--ink)">Lily</text>
+  <rect x="280" y="235" width="26" height="8" rx="2" fill="var(--ink)"/>
+  <text x="314" y="245" font-size="13" fill="var(--ink)">Logan</text>
+</svg>
+<figcaption>ดูกราฟซ้ายอย่างเดียวจะสรุปผิดเหมือน Lily กับ Nate ตอนแรก — กราฟขวาเผยว่า Logan ซื้อการเติบโตแพงเกินไป จน ROIC มุดใต้เส้นค่าเสียโอกาส: ยิ่งโตยิ่งจน</figcaption>
+</figure>
 
 เหตุผลที่ ROIC ต่างกันไม่ใช่เรื่องบัญชี แต่เป็นเรื่องธุรกิจล้วนๆ: สินค้าของ Lily แตกต่างพอที่ลูกค้ายอมจ่ายแพงกว่า และแต่ละร้านดึงลูกค้าได้มากกว่า ทำให้ยอดขายต่อพื้นที่สูงกว่า ส่วนสินค้าของ Logan เหมือนคู่แข่งจนต้องแข่งราคา
 
@@ -92,6 +171,23 @@ RSC มีสาขาต่างจังหวัดที่ ROIC แค่ 
 
 ปิดสาขานั้น ROIC เฉลี่ยขึ้น แต่กำไรเชิงเศรษฐศาสตร์ **หายไป 540,000 บาท** — เจ้าของจนลงจริงๆ
 
+<figure class="fig">
+<svg viewBox="0 0 640 200" role="img" aria-label="ถ้าปิดสาขาต่างจังหวัด ROIC เฉลี่ยขึ้นจาก 20.3 เป็น 21.0 เปอร์เซ็นต์ แต่กำไรเชิงเศรษฐศาสตร์ลดจาก 26.2 เหลือ 25.7 ล้านบาท">
+  <rect x="15" y="14" width="298" height="152" rx="8" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="3"/>
+  <text x="164" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">ROIC เฉลี่ยของบริษัท</text>
+  <text x="164" y="90" text-anchor="middle" font-size="25" font-weight="700" fill="var(--ink)" class="num">20.3% → 21.0%</text>
+  <text x="164" y="124" text-anchor="middle" font-size="14" font-weight="700" fill="var(--good)">↑ สวยขึ้นทันที — แต่นี่คือกับดัก</text>
+  <text x="164" y="150" text-anchor="middle" font-size="12" fill="var(--muted)" class="num">(47.0 − 2.16) ÷ (232 − 18) = 21.0%</text>
+  <rect x="327" y="14" width="298" height="152" rx="8" fill="var(--bad-soft)" stroke="var(--ink)" stroke-width="3"/>
+  <text x="476" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">กำไรเชิงเศรษฐศาสตร์รวม</text>
+  <text x="476" y="90" text-anchor="middle" font-size="25" font-weight="700" fill="var(--ink)" class="num">26.2 → 25.7 ล้าน</text>
+  <text x="476" y="124" text-anchor="middle" font-size="14" font-weight="700" fill="var(--bad)">↓ จนลงจริงปีละ 540,000 บาท</text>
+  <text x="476" y="150" text-anchor="middle" font-size="12" fill="var(--muted)" class="num">หายเท่ากำไรส่วนเกินของสาขา (12%−9%) × 18</text>
+  <text x="320" y="190" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">อัตราส่วนเฉลี่ยตอบคำถามผิด — เงินในกระเป๋าต่างหากที่ต้องนับ</text>
+</svg>
+<figcaption>สาขา 12% แพ้ค่าเฉลี่ยบริษัท แต่ยังชนะต้นทุนเงินทุน 9% — ปิดทิ้งคือโยนกำไรส่วนเกินปีละ 540,000 บาท เพื่อแลกกับอัตราส่วนที่หน้าตาดีขึ้น</figcaption>
+</figure>
+
 **บทเรียน: เป้าหมายคือทำกำไรเชิงเศรษฐศาสตร์รวมให้มากที่สุด ไม่ใช่ทำอัตราส่วนให้สวยที่สุด**
 
 ## 7. ราคาหุ้นในตลาด กับมูลค่าที่แท้จริง
@@ -105,6 +201,26 @@ RSC มีสาขาต่างจังหวัดที่ ROIC แค่ 
 - มูลค่าที่แท้จริงของหุ้น = 20 ดอลลาร์ต่อหุ้น ขณะที่เงินทุนที่ลงไปจริงมีแค่ 7 ดอลลาร์ต่อหุ้น
 - ส่วนต่าง 13 ดอลลาร์คือราคาที่ตลาด **จ่ายล่วงหน้า** ไปแล้วสำหรับกำไรเชิงเศรษฐศาสตร์ในอนาคต
 - ถ้าบริษัททำได้ **ตรงตามที่คาด** เป๊ะๆ อีก 5 ปีหุ้นจะมีมูลค่า 32 ดอลลาร์ คิดเป็นผลตอบแทนทบต้นปีละ 10% — ซึ่งเท่ากับต้นทุนเงินทุนพอดี ไม่มากไม่น้อย
+
+<figure class="fig">
+<svg viewBox="0 0 640 250" role="img" aria-label="ราคาหุ้นวันนี้ 20 ดอลลาร์ ประกอบด้วยเงินทุนจริง 7 กับความคาดหวังที่จ่ายล่วงหน้า 13 ถ้าทำได้ตามคาด อีก 5 ปีมูลค่า 32 ดอลลาร์ เท่ากับผลตอบแทนปีละ 10 เปอร์เซ็นต์พอดี">
+  <text x="170" y="86" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)" class="num">วันนี้ 20$</text>
+  <rect x="110" y="96" width="120" height="71" fill="var(--accent)" stroke="var(--ink)" stroke-width="2.5"/>
+  <rect x="110" y="167" width="120" height="38" fill="var(--muted)" stroke="var(--ink)" stroke-width="2.5"/>
+  <text x="102" y="185" font-size="13" fill="var(--ink)" text-anchor="end">เงินทุนที่ลงไปจริง <tspan font-weight="700" class="num">7$</tspan></text>
+  <text x="102" y="120" font-size="13" fill="var(--ink)" text-anchor="end">ความคาดหวังต่ออนาคต</text>
+  <text x="102" y="138" font-size="13" fill="var(--ink)" text-anchor="end">ที่จ่ายล่วงหน้าแล้ว <tspan font-weight="700" class="num">13$</tspan></text>
+  <line x1="245" y1="92" x2="412" y2="48" stroke="var(--ink)" stroke-width="3"/>
+  <polygon points="422,45 408,42 412,56" fill="var(--ink)"/>
+  <text x="330" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">ทำได้ตรงตามคาดเป๊ะ</text>
+  <text x="330" y="147" text-anchor="middle" font-size="13" fill="var(--muted)">= ทบต้น 10%/ปี เท่าต้นทุนเงินทุนพอดี</text>
+  <text x="490" y="22" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)" class="num">อีก 5 ปี 32$</text>
+  <rect x="430" y="30" width="120" height="175" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2.5"/>
+  <line x1="60" y1="205" x2="600" y2="205" stroke="var(--ink)" stroke-width="3"/>
+  <text x="320" y="238" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">อยากได้เกิน 10% บริษัทต้องทำ &quot;ดีกว่าที่คาด&quot; ไม่ใช่แค่ &quot;ดี&quot;</text>
+</svg>
+<figcaption>ส่วนสีเขียว 13$ คือกำไรในอนาคตที่ราคาวันนี้เก็บเงินไปแล้วตั้งแต่วันซื้อ — ผลตอบแทนส่วนเกินจึงเกิดได้จากผลงานที่เหนือความคาดหวังเท่านั้น</figcaption>
+</figure>
 
 > **ผู้ถือหุ้นได้ผลตอบแทนเกินปกติ ก็ต่อเมื่อบริษัททำได้ดีกว่าที่ตลาดคาดไว้เท่านั้น**
 

@@ -186,6 +186,20 @@ thead th { background: #eef2f8; border-bottom: 2px solid var(--ink); font-weight
 tbody tr:last-child td { border-bottom: none; }
 td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
+/* ภาพประกอบในเนื้อหา — SVG ฝัง inline เท่านั้น สีทุกสีต้องเป็น var() จากธีมนี้ */
+figure.fig {
+  margin: 1.75rem 0;
+  padding: 1rem 1rem .8rem;
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+}
+figure.fig svg { display: block; width: 100%; height: auto; }
+figure.fig svg text { font-family: var(--thai); }
+figure.fig svg .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+figure.fig figcaption { margin-top: .6rem; font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
 .muted { color: var(--muted); }
 .small { font-size: .88rem; }
 footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
