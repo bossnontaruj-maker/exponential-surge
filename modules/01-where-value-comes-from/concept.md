@@ -204,19 +204,20 @@ RSC มีสาขาต่างจังหวัดที่ ROIC แค่ 
 
 <figure class="fig">
 <svg viewBox="0 0 640 250" role="img" aria-label="ราคาหุ้นวันนี้ 20 ดอลลาร์ ประกอบด้วยเงินทุนจริง 7 กับความคาดหวังที่จ่ายล่วงหน้า 13 ถ้าทำได้ตามคาด อีก 5 ปีมูลค่า 32 ดอลลาร์ เท่ากับผลตอบแทนปีละ 10 เปอร์เซ็นต์พอดี">
-  <text x="170" y="86" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)" class="num">วันนี้ 20$</text>
-  <rect x="110" y="96" width="120" height="71" fill="var(--accent)" stroke="var(--ink)" stroke-width="2.5"/>
-  <rect x="110" y="167" width="120" height="38" fill="var(--muted)" stroke="var(--ink)" stroke-width="2.5"/>
-  <text x="102" y="185" font-size="13" fill="var(--ink)" text-anchor="end">เงินทุนที่ลงไปจริง <tspan font-weight="700" class="num">7$</tspan></text>
-  <text x="102" y="120" font-size="13" fill="var(--ink)" text-anchor="end">ความคาดหวังต่ออนาคต</text>
-  <text x="102" y="138" font-size="13" fill="var(--ink)" text-anchor="end">ที่จ่ายล่วงหน้าแล้ว <tspan font-weight="700" class="num">13$</tspan></text>
-  <line x1="245" y1="92" x2="412" y2="48" stroke="var(--ink)" stroke-width="3"/>
-  <polygon points="422,45 408,42 412,56" fill="var(--ink)"/>
-  <text x="330" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">ทำได้ตรงตามคาดเป๊ะ</text>
-  <text x="330" y="147" text-anchor="middle" font-size="13" fill="var(--muted)">= ทบต้น 10%/ปี เท่าต้นทุนเงินทุนพอดี</text>
-  <text x="490" y="22" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)" class="num">อีก 5 ปี 32$</text>
-  <rect x="430" y="30" width="120" height="175" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2.5"/>
-  <line x1="60" y1="205" x2="600" y2="205" stroke="var(--ink)" stroke-width="3"/>
+  <text x="240" y="86" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)" class="num">วันนี้ 20$</text>
+  <rect x="180" y="96" width="120" height="71" fill="var(--accent)" stroke="var(--ink)" stroke-width="2.5"/>
+  <rect x="180" y="167" width="120" height="38" fill="var(--muted)" stroke="var(--ink)" stroke-width="2.5"/>
+  <text x="172" y="185" font-size="13" fill="var(--ink)" text-anchor="end">เงินทุนที่ลงไปจริง <tspan font-weight="700" class="num">7$</tspan></text>
+  <text x="172" y="120" font-size="13" fill="var(--ink)" text-anchor="end">ความคาดหวังต่ออนาคต</text>
+  <text x="172" y="138" font-size="13" fill="var(--ink)" text-anchor="end">ที่จ่ายล่วงหน้าแล้ว <tspan font-weight="700" class="num">13$</tspan></text>
+  <line x1="310" y1="92" x2="440" y2="54" stroke="var(--ink)" stroke-width="3"/>
+  <polygon points="450,51 436,48 440,62" fill="var(--ink)"/>
+  <text x="378" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">ทำได้ตรงตามคาดเป๊ะ</text>
+  <text x="378" y="141" text-anchor="middle" font-size="13" fill="var(--muted)">= ทบต้น 10%/ปี</text>
+  <text x="378" y="160" text-anchor="middle" font-size="13" fill="var(--muted)">เท่าต้นทุนเงินทุนพอดี</text>
+  <text x="520" y="22" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)" class="num">อีก 5 ปี 32$</text>
+  <rect x="460" y="30" width="120" height="175" fill="var(--accent-soft)" stroke="var(--ink)" stroke-width="2.5"/>
+  <line x1="60" y1="205" x2="610" y2="205" stroke="var(--ink)" stroke-width="3"/>
   <text x="320" y="238" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">อยากได้เกิน 10% บริษัทต้องทำ &quot;ดีกว่าที่คาด&quot; ไม่ใช่แค่ &quot;ดี&quot;</text>
 </svg>
 <figcaption>ส่วนสีเขียว 13$ คือกำไรในอนาคตที่ราคาวันนี้เก็บเงินไปแล้วตั้งแต่วันซื้อ — ผลตอบแทนส่วนเกินจึงเกิดได้จากผลงานที่เหนือความคาดหวังเท่านั้น</figcaption>
