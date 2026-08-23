@@ -304,8 +304,6 @@ const PET_FRAMES = {
       "....SSSSSSSSSSSSSSSSS..."
     ],
     hop: [
-      "........................",
-      "........................",
       "......BBBBBBB...........",
       ".....BWWWWWWWB..........",
       "....BWWWWWWWWWB.........",
@@ -323,6 +321,8 @@ const PET_FRAMES = {
       ".....BWWWWWWWWWWWWWWWGB.",
       ".....BWWWBBBWWWWWWWBBB..",
       "......BBBB..BBBBBBBB....",
+      "........................",
+      "........................",
       "........................",
       "........................",
       "........................",
@@ -371,6 +371,7 @@ class Pet {
     const max = Math.max(8, window.innerWidth - PET_SIZE - 8);
     this.x = Math.min(max, Math.max(8, x));
     this.el.style.left = this.x + "px";
+    this.el.classList.toggle("right", this.x > window.innerWidth / 2);   // อยู่ครึ่งขวา → บอลลูนกางไปทางซ้าย
   }
   face(dir) { this.dir = dir; this.el.classList.toggle("flip", dir > 0); }   // สไปรต์เดินของลูก้าวาดหันซ้าย
   say(text, ms) {
@@ -386,6 +387,7 @@ class Pet {
 
 /* ---------- ลูก้า: state machine — นั่ง (กะพริบ/หาง) → เดิน 2–5 ก้าว → นั่ง → บางทีหันหลัง ---------- */
 const luca = { pet: null, mood: "normal", walkT: null, timer: null };
+window.addEventListener("resize", () => { if (luca.pet) luca.pet.place(luca.pet.x); if (kikiPet) kikiPet.place(kikiPet.x); });
 
 function lucaClear() { clearTimeout(luca.timer); clearInterval(luca.walkT); }
 
@@ -394,7 +396,6 @@ function lucaStart() {
   luca.pet = new Pet("luca");
   luca.pet.place(24);
   luca.pet.el.addEventListener("dblclick", petHide);
-  window.addEventListener("resize", () => luca.pet && luca.pet.place(luca.pet.x));
   lucaIdle();
   return luca.pet;
 }
@@ -535,7 +536,7 @@ function mascotHome() {
   else if (due > 0)     text = `มีคิวทบทวน ${due} ข้อ. ไม่ทำก็ได้. แต่จะลืม.`;
   else                  text = "มาแล้วเหรอ. อ่านต่อไป. ฉันจะดูอยู่ตรงนี้.";
   const p = mascotShow(kind, text);
-  if (p && luca.pet && mood !== "normal") { luca.mood = mood; lucaIdle(); }
+  if (p && luca.pet && luca.mood !== mood) { luca.mood = mood; lucaIdle(); }   // เปลี่ยนอารมณ์ทั้งขึ้นและลง — ไม่งั้นนอนขดค้างถาวร
   return p;
 }
 

@@ -98,7 +98,7 @@ function importProgress(file, done) {
       // ตรวจโครงก่อนเขียนทับ — ไฟล์ผิดต้องไม่ทำลาย progress ที่มีอยู่
       const data = JSON.parse(reader.result);
       if (!data || typeof data !== "object" ||
-          typeof data.modules !== "object" || typeof data.cards !== "object")
+          !data.modules || typeof data.modules !== "object" || !data.cards || typeof data.cards !== "object")
         throw new Error("ไม่ใช่ไฟล์ progress.json ของระบบนี้");
       localStorage.setItem(STORE_KEY, JSON.stringify(data));
       done(null);

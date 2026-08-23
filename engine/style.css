@@ -73,7 +73,7 @@
 
 body {
   margin: 0;
-  padding: 2rem 1.25rem 4rem;
+  padding: 2rem 1.25rem 6rem;   /* เผื่อที่ให้สัตว์ 84px ที่ขอบล่าง */
   background: var(--bg);
   color: var(--ink);
   font-family: var(--thai);
@@ -235,6 +235,8 @@ footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
   padding: .35rem .7rem; font-size: .9rem; font-weight: 600; line-height: 1.35;
 }
 .pet .bubble::after { content: ""; position: absolute; left: 14px; bottom: -9px; border: 6px solid transparent; border-top-color: var(--ink); border-bottom: 0; }
+.pet.right .bubble { left: auto; right: 30px; }
+.pet.right .bubble::after { left: auto; right: 14px; }
 .pet .bubble .who { font-size: .7rem; color: var(--muted); font-weight: 500; }
 .pet-kiki .bubble { background: var(--accent-soft); }
 .pet-paw { position: fixed; bottom: 6px; left: 6px; z-index: 60; font-size: 16px; line-height: 1; padding: .25rem .4rem; opacity: .55; }
