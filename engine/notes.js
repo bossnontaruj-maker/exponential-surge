@@ -11,7 +11,12 @@
 function renderNotes(root, moduleId, spec) {
   const saved = getNotes(moduleId);
   const timers = {};
+  const flushers = {};
   let dirty = 0;
+  // ปิดแท็บ/สลับแอปทันทีหลังพิมพ์ — เซฟช่องที่ยังค้างใน debounce ก่อน
+  const flushPending = () => Object.keys(timers).forEach(id => flushers[id] && flushers[id]());
+  window.addEventListener("pagehide", flushPending);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) flushPending(); });
 
   const status = document.createElement("div");
   status.className = "small muted notes-status";
@@ -25,16 +30,20 @@ function renderNotes(root, moduleId, spec) {
     ta.value = saved[id] || "";
     ta.dataset.id = id;
     const grow = () => { ta.style.height = "auto"; ta.style.height = Math.max(ta.scrollHeight, 60) + "px"; };
+    const flush = () => {
+      clearTimeout(timers[id]); delete timers[id];
+      setNote(moduleId, id, ta.value.trim());
+      dirty++;
+      status.textContent = `เซฟแล้ว · ${today()}`;
+    };
+    flushers[id] = flush;
     ta.addEventListener("input", () => {
       grow();
       status.textContent = "กำลังเซฟ…";
       clearTimeout(timers[id]);
-      timers[id] = setTimeout(() => {
-        setNote(moduleId, id, ta.value.trim());
-        dirty++;
-        status.textContent = `เซฟแล้ว · ${today()}`;
-      }, 300);
+      timers[id] = setTimeout(flush, 300);
     });
+    ta.addEventListener("blur", () => { if (timers[id]) flush(); });   // ออกจากช่อง = เซฟทันที
     requestAnimationFrame(grow);
     return ta;
   }
