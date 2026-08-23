@@ -501,11 +501,13 @@ function petPaw(show) {
 }
 
 /* ---------- API ที่หน้าต่างๆ เรียก — ชื่อคงเดิมจากเวอร์ชันการ์ด ---------- */
+let petReducedNoted = false;
 function mascotShow(kind, text) {
   if (petHidden()) { petPaw(true); return null; }
   const p = lucaStart();
   if (kind === "kiki") { kikiVisit(text); return kikiPet; }
-  p.say(text);
+  if (PET_REDUCED && !petReducedNoted) { petReducedNoted = true; text += " (เครื่องนี้ตั้งค่าปิดแอนิเมชันไว้ ฉันเลยนั่งเฉยๆ — เปิดที่ Windows > Ease of Access > Display > Show animations)"; }
+  p.say(text, PET_REDUCED ? 14000 : undefined);
   return p;
 }
 function mascotHide() { if (luca.pet) luca.pet.bubble.hidden = true; }
