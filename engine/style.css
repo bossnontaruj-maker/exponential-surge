@@ -213,3 +213,15 @@ footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
   50%      { transform: translateY(-25%); }
 }
 .bounce { display: inline-block; animation: bounce 1s ease-in-out infinite; }
+
+/* ลูก้า & คิคิ — การ์ดมาสคอต (engine/mascot.js) ห้ามอยู่ในหน้าเนื้อหา */
+.mascot {
+  display: flex; align-items: center; gap: .9rem;
+  max-width: 34rem; margin: 1rem 0; padding: .55rem .9rem;
+  border: 3px solid var(--ink); border-radius: 10px;
+  background: var(--panel); box-shadow: var(--shadow-sm);
+}
+.mascot svg { width: 56px; height: 56px; flex: none; }
+.mascot .who { font-size: .75rem; color: var(--muted); }
+.mascot .bubble { font-weight: 600; }
+.mascot-kiki { background: var(--accent-soft); }

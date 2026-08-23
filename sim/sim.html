@@ -38,6 +38,7 @@
 <script src="../engine/srs.js"></script>
 <script src="unlock.js"></script>
 <script src="../data/curriculum.js"></script>
+<script src="../engine/mascot.js"></script>
 <script>
 const LEVEL = unlockLevel();
 
@@ -122,6 +123,7 @@ function showResult(chosen) {
     <div class="small muted" style="margin-top:.6rem">${SCORE.hint}</div>`;
   app.appendChild(head);
   countUp(head.querySelector(".stat.big"), mine.score);
+  setTimeout(() => mascotSim(diff, mine.drew.length > 0, { after: head }), 750);   // รอให้ตัวเลขวิ่งจบก่อน
 
   if (mine.drew.length) {
     const warn = document.createElement("div");

@@ -63,6 +63,7 @@
 
 <script src="data/curriculum.js"></script>
 <script src="engine/srs.js"></script>
+<script src="engine/mascot.js"></script>
 <script>
 document.getElementById("title").textContent  = "📊 " + CURRICULUM.title;
 document.getElementById("goal").textContent   = CURRICULUM.goal;
@@ -158,6 +159,9 @@ function draw() {
     .reduce((mx, m) => Math.max(mx, Number(m.id)), 0);
   document.getElementById("simLevel").textContent =
     maxDone ? `ปลดล็อกถึงโมดูล ${maxDone}` : "ปลดล็อกระดับ 1";
+
+  // ลูก้าทักตามสถานะจริง — แปะใต้การ์ดความคืบหน้า
+  mascotHome({ after: document.querySelector(".wrap > .card") });
 }
 
 document.getElementById("imp").onchange = e => {

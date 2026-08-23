@@ -18,6 +18,7 @@
 <script src="data/curriculum.js"></script>
 <script src="engine/srs.js"></script>
 <script src="engine/quiz.js"></script>
+<script src="engine/mascot.js"></script>
 <script>
 // โหลดคลังคำถามของทุกโมดูลที่สร้างเสร็จแล้ว
 const ready = CURRICULUM.modules.filter(m => m.status === "ready");
@@ -50,6 +51,7 @@ function start() {
         <p class="small muted">ทำควิซของโมดูลก่อน แล้วคำถามจะเข้าคิวมาที่นี่เองตามรอบ 1 · 3 · 7 · 14 · 30 · 60 วัน
         ข้อที่ตอบผิดจะถูกดึงกลับมาเริ่มที่ 1 วันใหม่</p>
       </div>`;
+    mascotReview(0, { after: app });
     return;
   }
 
@@ -59,9 +61,11 @@ function start() {
   app.innerHTML = "";
   app.appendChild(head);
 
+  mascotReview(questions.length, { after: app });
+
   const box = document.createElement("div");
   app.appendChild(box);
-  renderQuiz(box, "", questions);
+  renderQuiz(box, "", questions, { onFinish: (score, total) => mascotQuiz(score, total, { after: app }) });
 }
 </script>
 </body>
