@@ -32,7 +32,7 @@ const CURRICULUM = {
       subtitle: "แกนกลางของทั้งเล่ม อธิบายด้วยสูตรเดียว",
       sourceId: "mckinsey-valuation-7e", sourceRef: "บทที่ 3",
       simUnlock: "เห็นกระแสเงินสดอิสระและเงินทุนที่ลงไป",
-      status: "planned" },
+      status: "ready" },
 
     { id: "03", icon: "⚖️", dir: "03-cost-of-capital",
       title: "ต้นทุนเงินทุนคืออะไร",
