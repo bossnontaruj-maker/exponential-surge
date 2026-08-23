@@ -56,6 +56,17 @@
   --shadow-sm: 2px 2px 0 0 var(--ink);
   --shadow: 4px 4px 0 0 var(--ink);
   --shadow-lg: 8px 8px 0 0 var(--ink);
+
+  /* สัตว์เลี้ยงของระบบ (engine/mascot.js) — สีเฉพาะมาสคอต รวมศูนย์ไว้ที่นี่ที่เดียว */
+  --pet-ink: var(--ink);
+  --pet-fur: #c9cfda;        /* ขนเทาของลูก้า / หูคิคิ */
+  --pet-fur-dark: #6b7590;   /* ลายสลิด */
+  --pet-white: #ffffff;
+  --pet-pink: #f4a9b8;       /* หูใน จมูก */
+  --pet-eye: #b5d33d;        /* ตาเขียวอมเหลืองของลูก้า */
+  --pet-carrot: #f0843c;
+  --pet-leaf: var(--accent);
+  --pet-shadow: var(--line-soft);
 }
 
 * { box-sizing: border-box; }
@@ -214,14 +225,18 @@ footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
 }
 .bounce { display: inline-block; animation: bounce 1s ease-in-out infinite; }
 
-/* ลูก้า & คิคิ — การ์ดมาสคอต (engine/mascot.js) ห้ามอยู่ในหน้าเนื้อหา */
-.mascot {
-  display: flex; align-items: center; gap: .9rem;
-  max-width: 34rem; margin: 1rem 0; padding: .55rem .9rem;
-  border: 3px solid var(--ink); border-radius: 10px;
-  background: var(--panel); box-shadow: var(--shadow-sm);
+/* ลูก้า & คิคิ — desktop pet ขอบล่างจอ (engine/mascot.js) ห้ามอยู่ในหน้าเนื้อหา */
+.pet { position: fixed; bottom: 0; left: 16px; width: 84px; height: 84px; z-index: 60; cursor: pointer; user-select: none; }
+.pet .sprite, .pet .sprite svg { width: 84px; height: 84px; display: block; }
+.pet.flip .sprite { transform: scaleX(-1); }
+.pet .bubble {
+  position: absolute; bottom: calc(100% - 4px); left: 30px; width: max-content; max-width: 16rem;
+  background: var(--panel); border: 3px solid var(--ink); border-radius: 10px; box-shadow: var(--shadow-sm);
+  padding: .35rem .7rem; font-size: .9rem; font-weight: 600; line-height: 1.35;
 }
-.mascot svg { width: 56px; height: 56px; flex: none; }
-.mascot .who { font-size: .75rem; color: var(--muted); }
-.mascot .bubble { font-weight: 600; }
-.mascot-kiki { background: var(--accent-soft); }
+.pet .bubble::after { content: ""; position: absolute; left: 14px; bottom: -9px; border: 6px solid transparent; border-top-color: var(--ink); border-bottom: 0; }
+.pet .bubble .who { font-size: .7rem; color: var(--muted); font-weight: 500; }
+.pet-kiki .bubble { background: var(--accent-soft); }
+.pet-paw { position: fixed; bottom: 6px; left: 6px; z-index: 60; font-size: 16px; line-height: 1; padding: .25rem .4rem; opacity: .55; }
+.pet-paw:hover { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .pet, .pet .sprite { transition: none; } }
