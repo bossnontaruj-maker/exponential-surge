@@ -23,7 +23,7 @@ function load() {
   } catch (e) {
     console.warn("อ่านสถานะไม่ได้ เริ่มใหม่", e);
   }
-  return { version: 1, updated: today(), modules: {}, cards: {}, insights: [] };
+  return { version: 1, updated: today(), modules: {}, cards: {}, insights: [], notes: {} };
 }
 
 function save(state) {
@@ -74,6 +74,20 @@ function setModuleFlag(moduleId, flag, value) {
   state.modules[moduleId] = m;
   save(state);
   return m;
+}
+
+/* สมุดบันทึกในเว็บ — ข้อความต่อช่องต่อโมดูล เก็บใน state.notes[moduleId][fieldId]
+   ส่งออกไปกับ progress.json ตัวเดิม แล้ว scripts/notes_from_progress.py แปลงกลับเป็น notes.md ให้ */
+function getNotes(moduleId) {
+  return (load().notes || {})[moduleId] || {};
+}
+
+function setNote(moduleId, fieldId, text) {
+  const state = load();
+  state.notes = state.notes || {};
+  state.notes[moduleId] = state.notes[moduleId] || {};
+  if (text) state.notes[moduleId][fieldId] = text; else delete state.notes[moduleId][fieldId];
+  save(state);
 }
 
 function addInsight(text, moduleId) {

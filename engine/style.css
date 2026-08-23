@@ -225,6 +225,18 @@ footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
 }
 .bounce { display: inline-block; animation: bounce 1s ease-in-out infinite; }
 
+/* สมุดบันทึกในเว็บ (engine/notes.js) */
+.notes-item { margin: 0 0 1.1rem; }
+.notes-item label { display: block; margin-bottom: .35rem; }
+.notes-field { width: 100%; min-height: 60px; padding: .55rem .7rem; font: inherit; font-family: var(--thai); line-height: 1.5;
+  border: 3px solid var(--ink); border-radius: 8px; background: var(--panel); box-shadow: var(--shadow-sm); resize: vertical; }
+.notes-field:focus { outline: none; border-color: var(--accent); }
+.notes-table td { vertical-align: top; min-width: 7rem; }
+.notes-table td:first-child { min-width: 2rem; font-weight: 700; }
+.notes-table .notes-field { min-height: 48px; box-shadow: none; }
+.notes-select { font: inherit; padding: .4rem .5rem; border: 3px solid var(--ink); border-radius: 8px; background: var(--panel); }
+.notes-status { position: sticky; bottom: .5rem; display: inline-block; padding: .2rem .6rem; background: var(--panel); border: 2px solid var(--line-soft); border-radius: 8px; }
+
 /* ลูก้า & คิคิ — desktop pet ขอบล่างจอ (engine/mascot.js) ห้ามอยู่ในหน้าเนื้อหา */
 .pet { position: fixed; bottom: 0; left: 16px; width: 84px; height: 84px; z-index: 60; cursor: pointer; user-select: none; }
 .pet .sprite, .pet .sprite svg { width: 84px; height: 84px; display: block; }

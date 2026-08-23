@@ -120,6 +120,11 @@ function draw() {
       kase.onclick = () => location.href = `modules/${m.dir}/case.html`;
       bar.appendChild(kase);
 
+      const notes = document.createElement("button");
+      notes.textContent = "สมุดบันทึก";
+      notes.onclick = () => location.href = `modules/${m.dir}/notes.html`;
+      bar.appendChild(notes);
+
       card.appendChild(bar);
 
       const gate = document.createElement("div");
